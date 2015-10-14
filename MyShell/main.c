@@ -75,7 +75,9 @@ int main (int argc, char ** argv)
             
             /* Write the command to history */
             history[pc] = (char *)malloc(sizeof(buf));
-            strcpy(history[pc++], buf);
+            if (strcmp(buf, "\n")) {
+                strcpy(history[pc++], buf);
+            }
         
             /* tokenize the input into args array */
             arg = args;
