@@ -125,7 +125,7 @@ int main (int argc, char ** argv)
                 if (!strcmp(args[0], "run")) {
                     pid_t pid = fork();
                     if (pid == 0) {
-                        execvp(args[1], &args[2]);
+                        execvp(args[1], &args[1]);
                         printf("Could not run program");
                         return 0;
                     }
