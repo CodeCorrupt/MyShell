@@ -1,5 +1,4 @@
-/*
- * Extended form strtokeg by Ian G. Graham.
+/* Extended form strtokeg by Ian G. Graham.
  ********************************************************************
    version: 1.0
    date:    December 2003
@@ -38,7 +37,7 @@
 #define MAX_BUFFER 1024                        // max char in line
 #define MAX_ARGS 64                            // max # args
 #define SEPARATORS " \n"                       // token sparators
-#define INIT_HIST_LEN 1
+#define INIT_HIST_LEN 10
 
 int main (int argc, char ** argv)
 {
