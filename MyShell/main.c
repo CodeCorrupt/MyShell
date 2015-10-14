@@ -70,7 +70,7 @@ int main (int argc, char ** argv)
             
             /* If history if full, double the size */
             if (pc >= sizeof(history)) { //If the last element is not null
-                realloc(history, sizeof(history)*2);
+                history = realloc(history, sizeof(history)*2);
             }
             
             /* Write the command to history */
@@ -110,7 +110,8 @@ int main (int argc, char ** argv)
                 
                 if (!strcmp(args[0], "history")) { // "pwd" command
                     if (!args[1]) {
-                        for (int i=0; i<pc; i++) {
+                        int i;
+                        for (i=0; i<pc; i++) {
                             printf("%s", history[i]);
                         }
                     }
