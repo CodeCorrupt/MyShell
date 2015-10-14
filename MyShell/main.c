@@ -41,14 +41,14 @@
 
 #define MAX_BUFFER 1024                        // max char in line
 #define MAX_ARGS 64                            // max # args
-#define SEPARATORS " "                         // token sparators
+#define SEPARATORS " \n"                       // token sparators
    
 int main (int argc, char ** argv)
 {
     char buf[MAX_BUFFER];                      // line buffer
     char * args[MAX_ARGS];                     // pointers to arg strings
     char ** arg;                               // working pointer thru args
-    char * prompt = "#" ;                    // shell prompt
+    char * prompt = "#" ;                      // shell prompt
 
     /* keep reading input until "quit" command or eof of redirected input */
     while (!feof(stdin)) {
