@@ -42,6 +42,7 @@
 #include <errno.h>
 #include <sys/stat.h>
 #include <sys/types.h>
+#include <signal.h>
 
 #define MAX_BUFFER 1024                        // max char in line
 #define MAX_ARGS 64                            // max # args
@@ -146,6 +147,13 @@ int main (int argc, char ** argv)
                     continue;
                 }
                 
+                if (!strcmp(args[0], "murder")) {
+                    if(!(kill(atoi(args[1]), SIGKILL))) {
+                        printf("Success");
+                    }
+                    continue;
+                }
+
                 /* else pass command onto OS (or in this instance, print them out) */
                 arg = args;
                 while (*arg) fprintf(stdout,"%s ",*arg++);
