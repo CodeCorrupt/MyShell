@@ -125,12 +125,13 @@ int main (int argc, char ** argv)
                     pid_t pid = fork();
                     if (pid == 0) {
                         execvp(args[1], &args[2]);
+                        printf("Could not run program");
                         return 0;
                     }
                     else {
                         wait(&pid);
                     }
-                    
+                    continue;
                 }
                 
                 /* else pass command onto OS (or in this instance, print them out) */
