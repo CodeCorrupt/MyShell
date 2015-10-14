@@ -134,6 +134,17 @@ int main (int argc, char ** argv)
                     }
                     continue;
                 }
+
+                if (!strcmp(args[0], "background")) {
+                    pid_t pid = fork();
+                    if (pid == 0) {
+                        execvp(args[1], &args[1]);
+                        printf("Could not run program");
+                        return 0;
+                    }
+                    printf("%d\n", pid);
+                    continue;
+                }
                 
                 /* else pass command onto OS (or in this instance, print them out) */
                 arg = args;
