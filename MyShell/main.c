@@ -125,6 +125,7 @@ int main (int argc, char ** argv)
                     pid_t pid = fork();
                     if (pid == 0) {
                         execvp(args[1], &args[2]);
+                        return 0;
                     }
                     else {
                         wait(&pid);
