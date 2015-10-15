@@ -1,0 +1,7 @@
+Usage:
+    repeat <num_times> <commad> [arguments]...
+
+Example:
+    repeat 5 /usr/bin/xterm -bg green
+    - This will spawn 5 xterms with green backgrounds.
+    - This will also return a list of the PIDs created.
