@@ -1,28 +1,20 @@
-/* Extended form strtokeg by Ian G. Graham.
- ********************************************************************
-   version: 1.0
-   date:    December 2003
-   author:  Ian G Graham
-            School of Information Technology
-            Griffith University, Gold Coast
-            ian.graham@griffith.edu.au
-            
-   copyright (c) Ian G Graham, 2003. All rights reserved.
-            
-   This code can be used for teaching purposes, but no warranty,
-   explicit or implicit, is provided.
- ******************************************************************
- * usage:
- *  reads in a line of keyboard input at a time, parsing it into
+/* Author   : Tyler Hoyt / t2650010
+ *   Email  : hoyt@knights.ucf.edu
+ * Class    : COP-4600 / Opperating Systems
+ * Semester : Fall 2015
+ *
+ * Extended form strtokeg by Ian G. Graham.
+ *
+ * Usage:
+ *  Reads in a line of keyboard input at a time, parsing it into
  *  tokens that are separated by white spaces (set by #define
  *  SEPARATORS).
  *
- *  can use redirected input
+ *  Can use redirected input
  *      
- *  if the first token is a recognized internal command, then that
+ *  If the first token is a recognized internal command, then that
  *  command is executed. otherwise the tokens are printed on the
  *  display.
- * 
  */
 
 #include <string.h>
@@ -47,7 +39,7 @@ int main (int argc, char ** argv)
     char * prompt = "#" ;                      // shell prompt
     char path[MAX_BUFFER];                     // stores path
     getcwd(path, sizeof(path));                // Initialize the path
-    char ** history;
+    char ** history;                           // two-d array to store history stirngs
     int pc = 0;                                // Program Counter used for hist
     
     history = (char **)calloc(INIT_HIST_LEN,sizeof(char *));
@@ -65,9 +57,9 @@ int main (int argc, char ** argv)
             }
             
             /* Write the command to history */
-            history[pc] = (char *)malloc(sizeof(buf));
+            history[pc] = (char *)malloc(sizeof(buf)); // allocate new memory
             if (strcmp(buf, "\n")) {
-                strcpy(history[pc++], buf);
+                strcpy(history[pc++], buf);            // copy in buf
             }
         
             /* tokenize the input into args array */
@@ -106,40 +98,43 @@ int main (int argc, char ** argv)
                             printf("%s", history[i]);
                         }
                     }
-                    else if (!strcmp(args[1], "-c")) {
-                        free(history);
+                    else if (!strcmp(args[1], "-c")) { // If given the clear flag
+                        free(history);              // Release history and make again
                         history = (char **)calloc(INIT_HIST_LEN,sizeof(char *));
-                        pc = 0;
+                        pc = 0;                     // reset program counter
                     }
                     continue;
                 }
-                if (!strcmp(args[0], "run")) {
-                    pid_t pid = fork();
+                if (!strcmp(args[0], "run")) {      // "run" command
+                    pid_t pid = fork();             // fork the process
                     if (pid == 0) {
-                        execvp(args[1], &args[1]);
-                        printf("Could not run program");
-                        return 0;
+                        execvp(args[1], &args[1]);  // Have the child exec
+                        printf("Could not run program"); // If it hit here, there 
+                        return 0;                     // was an error. return.
                     }
-                    else {
-                        wait(&pid);
+                    else {                              // if parent
+                        wait(&pid);                 // Wait for child to finish
                     }
                     continue;
                 }
 
-                if (!strcmp(args[0], "background")) {
-                    pid_t pid = fork();
+                if (!strcmp(args[0], "background")) { // "background" command
+                    pid_t pid = fork();                 // Exact same as "run"
                     if (pid == 0) {
                         execvp(args[1], &args[1]);
                         printf("Could not run program");
                         return 0;
-                    }
-                    printf("%d\n", pid);
-                    continue;
-                }
+                    }                               // except parent does not wate
+                    printf("%d\n", pid);            // instead it prints the PID
+                    continue;                       // and gets on with it's life
+                }                                   // (good parenting, huh?)
                 
-                if (!strcmp(args[0], "murder")) {
-                    if(!(kill(atoi(args[1]), SIGKILL))) {
-                        printf("Success");
+                if (!strcmp(args[0], "murder")) {   // "murder" command
+                    if(!(kill(atoi(args[1]), SIGKILL))) {   // sends SIGKILL to PID
+                        printf("The deed is done.\n");          // Let user know if it worked
+                    }
+                    else {
+                        printf("Error: Could not kill process: %s\n", args[1]);
                     }
                     continue;
                 }
