@@ -143,12 +143,12 @@ int main (int argc, char ** argv)
                 
                 if (!strcmp(args[0], "repeat")) {   // "repeat" command
                     int i;
-                    for (i = 0; i < atoi(args[1]); i++) {
-                            if (fork() == 0) {
-                                execvp(args[2], &args[2]);
+                    for (i = 0; i < atoi(args[1]); i++) { // loop the number of times
+                            if (fork() == 0) {          // if you're a child
+                                execvp(args[2], &args[2]); //do the same as background
                                 printf("Could not run program");
                                 return 0;
-                            }
+                            }                   // don't wait for them to finish
                     }
                 }
 
