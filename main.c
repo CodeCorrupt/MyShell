@@ -143,13 +143,25 @@ int main (int argc, char ** argv)
                 
                 if (!strcmp(args[0], "repeat")) {   // "repeat" command
                     int i;
+                    int * new_pids = (int *) calloc(atoi(args[1]), sizeof(int));
                     for (i = 0; i < atoi(args[1]); i++) { // loop the number of times
-                            if (fork() == 0) {          // if you're a child
-                                execvp(args[2], &args[2]); //do the same as background
-                                printf("Could not run program");
-                                return 0;
-                            }                   // don't wait for them to finish
+                        pid_t pid = fork();
+                        new_pids[i] = pid;      // Add the new pid to the list of PIDs spawned
+                        if (pid == 0) {          // if you're a child
+                            execvp(args[2], &args[2]); //do the same as background
+                            printf("Could not run program");
+                            return 0;
+                        }                   // don't wait for them to finish
                     }
+                    /* Print out the PIDs */
+                    printf("PIDs: ");
+                    for ( i=0; i<atoi(args[1]); i++) {
+                        printf("%d", new_pids[i]);
+                        if (i != (atoi(args[1]) - 1)) {  // print a comma only if not last one
+                            printf(", ");
+                        }
+                    }
+                    printf("\n");                   // put a new line at the end to be fancy
                 }
 
 
@@ -162,4 +174,3 @@ int main (int argc, char ** argv)
     }
     return 0; 
 }
-
