@@ -139,6 +139,20 @@ int main (int argc, char ** argv)
                     continue;
                 }
 
+                /************************!!!Extra credit!!!************************/
+                
+                if (!strcmp(args[0], "repeat")) {   // "repeat" command
+                    int i;
+                    for (i = 0; i < atoi(args[1]); i++) {
+                            if (fork() == 0) {
+                                execvp(args[2], &args[2]);
+                                printf("Could not run program");
+                                return 0;
+                            }
+                    }
+                }
+
+
                 /* else pass command onto OS (or in this instance, print them out) */
                 arg = args;
                 while (*arg) fprintf(stdout,"%s ",*arg++);
