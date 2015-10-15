@@ -163,7 +163,7 @@ int main (int argc, char ** argv)
                     }
                     printf("\n");                   // put a new line at the end to be fancy
                 }
-
+                /******************************************************************/
 
                 /* else pass command onto OS (or in this instance, print them out) */
                 arg = args;
